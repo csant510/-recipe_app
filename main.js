@@ -4,24 +4,19 @@ const express = require("express"),
   app = express(),
   errorController = require("./controllers/errorController"),
   homeController = require("./controllers/homeController"),
-  layouts = require("express-ejs-layouts");
-  MongoDB = require("mongodb").MongoClient,
-  dbURL = "mongodb://localhost:27017",
-  dbName = "recipe_db";
-
+  layouts = require("express-ejs-layouts"),
   
-MongoDB.connect(dbURL, { useUnifiedTopology: true }, (error, client) =>{
-  if (error) throw error;
-  let db = client.db(dbName);
-  db.collection("contacts")
-  .find()
-  .toArray((error,data) => {
-    if (error) throw error;
-    console.log(data);
-  });
-})
+  mongoose = require("mongoose");
+//  Subscriber = require("./models/subscriber");
 
-
+  mongoose.connect("mongodb://localhost:27017/recipe_db",{ useNewUrlParser: true });
+  
+  mongoose.set("useCreateIndex", true);
+    const db = mongoose.connection;
+    db.once("open", () => {
+    console.log("Successfully connected to MongoDB using Mongoose!");
+    });
+  
 
 app.set("port", process.env.PORT || 3000);
 app.set("view engine", "ejs");
