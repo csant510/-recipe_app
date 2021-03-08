@@ -3,6 +3,10 @@ const express = require("express"),
   errorController = require("./controllers/errorController"),
   homeController = require("./controllers/homeController"),
   layouts = require("express-ejs-layouts");
+  MongoDB = require("mongodb").MongoClient,
+  dbURL = "mongodb://localhost:27017",
+  dbName = "recipe_db";
+
 
 app.set("port", process.env.PORT || 3000);
 app.set("view engine", "ejs");
