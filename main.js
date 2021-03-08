@@ -5,9 +5,8 @@ const express = require("express"),
   errorController = require("./controllers/errorController"),
   homeController = require("./controllers/homeController"),
   layouts = require("express-ejs-layouts"),
-  
   mongoose = require("mongoose");
-//  Subscriber = require("./models/subscriber");
+ // Subscriber = require("./models/subscriber");
 
   mongoose.connect("mongodb://localhost:27017/recipe_db",{ useNewUrlParser: true });
   
@@ -16,6 +15,38 @@ const express = require("express"),
     db.once("open", () => {
     console.log("Successfully connected to MongoDB using Mongoose!");
     });
+   
+
+   
+    const subscriberSchema = mongoose.Schema({
+      name: String,
+      email: String,
+      zipCode: Number
+    });
+    
+  const Subscriber = mongoose.model("Subscriber", subscriberSchema);
+    
+  var subscriber1 = new Subscriber({
+    name: "Charles Santana",
+    email: "Charles@CharlesSantana.com"
+  });
+  
+  subscriber1.save((error, savedDocument) => {
+    if (error) console.log(error);
+    console.log(savedDocument);
+  });
+  
+  Subscriber.create(
+    {
+      name: "Charles Santana",
+      email: "Charles@CharlesSantana.com"
+    },
+    function (error, savedDocument) {
+      if (error) console.log(error);
+      console.log(savedDocument);
+    }
+  );
+  
   
 
 app.set("port", process.env.PORT || 3000);
